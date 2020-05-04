@@ -1,18 +1,57 @@
 <!DOCTYPE html>
-<html>
+ <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+
 <meta charset="ISO-8859-1">
 <title>Cadastro de pessoas</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <link type="text/css" rel="stylesheet" href="/materialize-v1.0.0/materialize/css/materialize.min.css"  media="screen,projection"/>
+ <link type="text/css" rel="stylesheet" href="/materialize-v1.0.0/materialize/css/materialize.css"  media="screen,projection"/>
+ 
 </head>
 <body>
-<form action="salvarpessoa" method="post">
-<label> Cadastro:</label>
-<label>Nome:</label><input name="nome"></label>
-<label>Sobrenome:<input name="sobrenome"></label>
-<label>Telefone:<input name="telefone"></label>
-<label>Endereço:</label><input name="endereco"></label>
-<input type="submit" value="salvar">
+
+
+<form action="salvarpessoa" method="post" th:object="${pessoaobj}">
+	
+	<label> Cadastro de clientes:</label><br>
+	<label>ID</label>
+	<input name="id" th:field="*{id}" readonly="readonly"> 
+	<label>Nome:</label>
+	<input name="nome" th:field="*{nome}"><br>
+	<label>Sobrenome:</label>
+	<input name="sobrenome" th:field="*{sobrenome}"><br>
+	<label>Telefone:</label>
+	<input name="telefone" th:field="*{telefone}"><br>
+	<label>Endereço:</label>
+	<input name="endereco" th:field="*{endereco}"><br>
+	<input class="waves-effect waves-light btn"  type="submit" value="salvar"> 
 
 </form>
+
+<a href= "/listapessoas">Lista de pessoas</a>
+
+<table class="striped" >
+
+<tr th:each = "pessoa : ${pessoas}"> <!-- &{pessoas} informação que virá do banco de dados. -->
+	<td th:text = "${pessoa.id}">
+	<label> Nome: </label>
+	<td th:text = "${pessoa.nome}">
+	<label> Sobrenome: </label>
+	<td th:text = "${pessoa.sobrenome}">
+	<label> telefone: </label>
+	<td th:text = "${pessoa.telefone}">
+	<label> Endereço: </label>
+	<td th:text = "${pessoa.endereco}">
+	<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a> </td>
+	<td><a th:href="@{/excluirpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Excluir</a> </td>
+	</td> <!--Celula -->
+	</tr> <!--Linha -->
+	
+
+</table>
+
+<script type="text/javascript" src="/materialize-v1.0.0/materialize/js/materialize.js"></script>
+<script type="text/javascript" src="/materialize-v1.0.0/materialize/js/materialize.min.js"></script>
 </body>
 </html>
